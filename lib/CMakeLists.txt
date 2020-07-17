@@ -1,0 +1,1 @@
+add_subdirectory(nrf_802154_sl)
