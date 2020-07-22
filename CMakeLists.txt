@@ -9,7 +9,6 @@ add_library(radio_driver src/nrf_802154.c
                          src/nrf_802154_rx_buffer.c
                          src/nrf_802154_stats.c
                          src/nrf_802154_trx.c
-                         src/fal/nrf_802154_fal.c
                          src/mac_features/nrf_802154_csma_ca.c
                          src/mac_features/nrf_802154_delayed_trx.c
                          src/mac_features/nrf_802154_filter.c
@@ -24,7 +23,10 @@ add_library(radio_driver src/nrf_802154.c
                          src/platform/temperature/nrf_802154_temperature_none.c
                          src/nrf_802154_notification_direct.c
                          src/nrf_802154_request_direct.c
-                         src/nrf_802154_swi.c)
+                         src/nrf_802154_swi.c
+
+                         external/mpsl_utils/mpsl_utils.c
+)
 
 add_subdirectory(external)
 add_subdirectory(lib)
@@ -33,10 +35,11 @@ target_link_libraries(radio_driver nrfx)
 target_link_libraries(radio_driver nrf_802154_sl)
 target_link_libraries(radio_driver nrf_802154_sl_platform)
 
-target_include_directories(radio_driver PUBLIC src)
+target_include_directories(radio_driver PUBLIC src external/mpsl_utils)
 
-target_compile_definitions(radio_driver
-    PUBLIC 
-        -DNRF_802154_INTERNAL_RADIO_IRQ_HANDLING=1
-        -DNRF_802154_INTERNAL_SWI_IRQ_HANDLING=1
+target_compile_definitions(radio_driver 
+    PUBLIC
+        -DNRF_802154_INTERNAL_RADIO_IRQ_HANDLING=0
+        -DNRF_802154_INTERNAL_SWI_IRQ_HANDLING=0
+        -DRAAL_REM=1
 )
