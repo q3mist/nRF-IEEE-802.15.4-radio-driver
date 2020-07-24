@@ -9,7 +9,6 @@ add_library(radio_driver src/nrf_802154.c
                          src/nrf_802154_rx_buffer.c
                          src/nrf_802154_stats.c
                          src/nrf_802154_trx.c
-                         # Comment to integrate mpsl
                          src/fal/nrf_802154_fal.c
                          src/mac_features/nrf_802154_csma_ca.c
                          src/mac_features/nrf_802154_delayed_trx.c
@@ -33,7 +32,11 @@ add_subdirectory(lib)
 target_link_libraries(radio_driver nrfx)
 target_link_libraries(radio_driver nrf_802154_sl)
 target_link_libraries(radio_driver nrf_802154_sl_platform)
-# Uncomment to integrate mpsl
-#target_link_libraries(radio_driver mpsl)
 
 target_include_directories(radio_driver PUBLIC src)
+
+target_compile_definitions(radio_driver
+    PUBLIC 
+        -DNRF_802154_INTERNAL_RADIO_IRQ_HANDLING=1
+        -DNRF_802154_INTERNAL_SWI_IRQ_HANDLING=1
+)
