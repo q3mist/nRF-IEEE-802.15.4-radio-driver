@@ -24,8 +24,6 @@ add_library(radio_driver src/nrf_802154.c
                          src/nrf_802154_notification_direct.c
                          src/nrf_802154_request_direct.c
                          src/nrf_802154_swi.c
-
-                         external/mpsl_utils/mpsl_utils.c
 )
 
 add_subdirectory(external)
@@ -35,7 +33,7 @@ target_link_libraries(radio_driver nrfx)
 target_link_libraries(radio_driver nrf_802154_sl)
 target_link_libraries(radio_driver nrf_802154_sl_platform)
 
-target_include_directories(radio_driver PUBLIC src external/mpsl_utils)
+target_include_directories(radio_driver PUBLIC src)
 
 target_compile_definitions(radio_driver 
     PUBLIC
